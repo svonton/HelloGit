@@ -3,11 +3,24 @@ import java.util.*;
 import java.lang.*;
 
 public class hangman {
-    public static void main (String[] args){
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("HANGMAN");
+        while (true){
+            System.out.print("Type \"play\" to play the game, \"exit\" to quit: ");
+            String user_guess = sc.nextLine();
+            if (Objects.equals(user_guess,"play")){
+                game();
+            }
+            if (Objects.equals(user_guess,"exit")){
+                break;
+            }
+        }
+    }
+    public static void game (){
         Scanner scanner = new Scanner(System.in);
         Random rand = new Random();
 
-        System.out.println("HANGMAN");
         String[] answers = {"java","python", "javascript", "kotlin"};
         String answer = answers[rand.nextInt(answers.length)];
 
