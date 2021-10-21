@@ -1,0 +1,56 @@
+package ChatBot;
+import java.util.Scanner;
+
+public class ChatBot {
+    public static void main (String[] args){
+        String bot_name = "Aboba";
+        String birth_year = "2021";
+
+        System.out.println("Hello! My name is "+ bot_name +"\n" +
+                "I was created in "+birth_year+".");
+
+        System.out.println("Please, remind me your name.");
+
+        Scanner scanner = new Scanner(System.in);
+        String user_name = scanner.nextLine();
+
+        System.out.println("What a great name you have, "+user_name+"!");
+
+        System.out.println("Let me guess your age.\n" +
+                "Enter remainders of dividing your age by 3, 5 and 7.");
+
+        int remainder3 = scanner.nextInt();
+        int remainder5 = scanner.nextInt();
+        int remainder7 = scanner.nextInt();
+
+        int age = (remainder3 * 70 + remainder5 * 21 + remainder7 * 15) % 105;
+
+        System.out.println("Your age is "+age+"; that's a good time to start programming!");
+
+        System.out.println("Now I will prove to you that I can count to any number you want.");
+        int amount = scanner.nextInt();
+        for (int i=0; i<amount+1; i++){
+            System.out.println(i+" !");
+            if (i==amount){
+                System.out.println("Completed, have a nice day!");
+            }
+        }
+
+        System.out.println("Let's test your programming knowledge.");
+        System.out.println("Why do we use methods?");
+        System.out.println("1. To repeat a statement multiple times.\n" +
+                "2. To decompose a program into several small subroutines.\n" +
+                "3. To determine the execution time of a program.\n" +
+                "4. To interrupt the execution of a program.");
+        int user_answer = 0;
+        int correct_answer = 2;
+        while (user_answer != correct_answer ){
+            user_answer = scanner.nextInt();
+            if (user_answer != correct_answer){
+                System.out.println("Please, try again.");
+            }
+        }
+        System.out.println("Great, you right!");
+        System.out.println("Congratulations, have a nice day!");
+    }
+}
