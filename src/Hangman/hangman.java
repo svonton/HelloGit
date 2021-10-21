@@ -1,5 +1,6 @@
 package Hangman;
 import java.util.*;
+import java.lang.*;
 
 public class hangman {
     public static void main (String[] args){
@@ -16,12 +17,26 @@ public class hangman {
         }
 
         Set<String> right_letters = new HashSet<String>(Arrays.asList(answer.split("")));
+        Set<String> already_guessed = new HashSet<String>();
 
         int health_points = 8;
         while (health_points != 0){
             System.out.println(String.join("",word_viewer));
             System.out.print("Input a letter: ");
             String user_input = scanner.nextLine();
+            if (user_input.length()>1){
+                System.out.println("You should input a single letter");
+                continue;
+            }
+            if(!Character.isLowerCase(user_input.charAt(0))){
+                System.out.println("Please enter a lowercase English letter");
+                continue;
+            }
+            if(already_guessed.contains(user_input)){
+                System.out.println("You've already guessed this letter");
+                continue;
+            }
+            already_guessed.add(user_input);
             if (right_letters.contains(user_input)){
                 if(!word_viewer.contains(user_input)){
                     ArrayList<Integer> indexes = char_switcher(user_input,answer);
