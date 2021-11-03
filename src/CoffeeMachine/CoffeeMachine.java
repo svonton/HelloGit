@@ -10,31 +10,64 @@ public class CoffeeMachine {
         Scanner scanner = new Scanner(System.in);
         Integer[] res = {400,540,120,9,550};
         ArrayList<Integer> machine_resources = new ArrayList<>(Arrays.asList(res));
+        while (true){
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
+            String user_action = scanner.nextLine();
+            if(Objects.equals(user_action, "buy")){
+                System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back – to main menu:");
+                String user_coffe = scanner.nextLine();
+                if(Objects.equals(user_coffe,"back")){
+                    continue;
+                }
+                else if(Objects.equals(user_coffe,"1") || Objects.equals(user_coffe,"2")
+                        || Objects.equals(user_coffe,"3")){
+                    ArrayList<Integer> buy_res = buy_process(Integer.parseInt(user_coffe));
+                    if (machine_resources.get(0)+buy_res.get(0)>0 && machine_resources.get(1)+buy_res.get(1)>0 &&
+                            machine_resources.get(2)+buy_res.get(2)>0 && machine_resources.get(3)+buy_res.get(3)>0){
 
-        print_status(machine_resources);
+                        for(int i=0; i < buy_res.size();i++){
+                            machine_resources.set(i,machine_resources.get(i)+buy_res.get(i));
+                        }
+                        System.out.println("I have enough resources, making you a coffee!");
+                    }
+                    else{
+                        System.out.println("Such ingredients are missing:");
+                        if (machine_resources.get(0)+buy_res.get(0)>0){
+                            System.out.println("Water");
+                        }
+                        if (machine_resources.get(1)+buy_res.get(1)>0){
+                            System.out.println("Milk");
+                        }
+                        if (machine_resources.get(2)+buy_res.get(2)>0){
+                            System.out.println("Beans");
+                        }
+                        if(machine_resources.get(3)+buy_res.get(3)>0){
+                            System.out.println("Cups");
+                        }
+                    }
+                    }
+                }
 
-        System.out.println("Write action (buy, fill, take):");
-        String user_action = scanner.nextLine();
-        if(Objects.equals(user_action, "buy")){
-            System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
-            ArrayList<Integer> buy_res = buy_process(scanner.nextInt());
-            for(int i=0; i < buy_res.size();i++){
-                machine_resources.set(i,machine_resources.get(i)+buy_res.get(i));
+            else if(Objects.equals(user_action,"fill")){
+                ArrayList<Integer> res_to_add = refill();
+                for(int i=0; i < res_to_add.size();i++){
+                    machine_resources.set(i,machine_resources.get(i)+res_to_add.get(i));
+                }
+            }
+            else if (Objects.equals(user_action,"take")){
+                System.out.println("I gave you "+machine_resources.get(4));
+                machine_resources.set(4,0);
+            }
+            else if (Objects.equals(user_action,"remaining")){
+                System.out.println();
+                print_status(machine_resources);
+                System.out.println();
+            }
+            else if (Objects.equals(user_action,"exit")){
+                break;
             }
         }
-        if(Objects.equals(user_action,"fill")){
-            ArrayList<Integer> res_to_add = refill();
-            for(int i=0; i < res_to_add.size();i++){
-                machine_resources.set(i,machine_resources.get(i)+res_to_add.get(i));
-            }
-        }
-        if (Objects.equals(user_action,"take")){
-            System.out.println("I gave you "+machine_resources.get(4));
-            machine_resources.set(4,0);
-        }
-        System.out.println();
-        print_status(machine_resources);
-        System.out.println();
+
     }
     public static ArrayList<Integer> buy_process(Integer user_order){
         Integer[] resources_cost = {0,0,0,0,0};
